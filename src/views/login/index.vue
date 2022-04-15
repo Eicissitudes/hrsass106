@@ -67,13 +67,6 @@ export default {
         callback()
       }
     }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
         mobile: '1380000000',
@@ -83,7 +76,9 @@ export default {
         mobile: [{ required: true, trigger: 'blur', message: '手机号不能为空' }, {
           validator: validateMobile
         }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', message: '密码不能为空' }, {
+          min: 6, max: 16, message: '密码长度为6到16位之间'
+        }]
       },
       loading: false,
       passwordType: 'password',
