@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 const service = axios.create({
   // 当执行npm run dev => 读取.env.developnment => api =>跨域代理
-  baseURL: process.env_VUE_APP_BASE_API, // npm run dev => /api
+  baseURL: process.env.VUE_APP_BASE_API, // npm run dev => /api
   timeout: 5000
 })
 service.interceptors.request.use()

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'hrsass-ihrm-token' // 设置一个独一无二的key
+const TokenKey = 'hrsaas-ihrm-token' // 设置一个独一无二的key
 
 export function getToken() {
   return Cookies.get(TokenKey)
