@@ -115,3 +115,23 @@ export function param2Obj(url) {
   })
   return obj
 }
+/**
+ *
+ *  将列表型的数据转化为树形结构 => 递归算法
+ */
+export function tranListToTreeDate(list, rootValue) {
+  var arr = []
+  list.forEach(item => {
+    if (item.pid === rootValue) {
+      // 找到之后 就要去找item下面有没有子节点
+      const children = tranListToTreeDate(list, item.id)
+      if (children.length) {
+        // 说明找到了子节点
+        item.children = children
+      }
+      arr.push(item)
+    }
+  })
+  console.log(arr)
+  return arr
+}
