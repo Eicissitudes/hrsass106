@@ -45,7 +45,7 @@
               show-icon
               :closable="false"
             />
-            <el-form ref="roleForm" :model="formData" label-width="120px" style="margin-top=50px">
+            <el-form :model="formData" label-width="120px" style="margin-top=50px">
               <el-form-item label="公司名称">
                 <el-input v-model="formData.name" disabled style="width:400px" />
               </el-form-item>
@@ -67,7 +67,7 @@
     </div>
     <!--  放置一个弹层组件 -->
     <el-dialog title="编辑部门" :visible="showDialog" @close="btnCancel">
-      <el-form label-width="120px" :model="roleForm" :rules="rules">
+      <el-form ref="roleForm" label-width="120px" :model="roleForm" :rules="rules">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="roleForm.name" />
         </el-form-item>
