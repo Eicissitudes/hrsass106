@@ -132,6 +132,5 @@ export function tranListToTreeDate(list, rootValue) {
       arr.push(item)
     }
   })
-  console.log(arr)
   return arr
 }
