@@ -50,7 +50,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="showRole(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -68,6 +68,8 @@
           <canvas ref="myCanvas" />
         </el-row>
       </el-dialog>
+      <!-- 放置添加角色的组件 -->
+      <assign-role ref="assignRole" :user-id="userId" :show-role-dialog.sync="showRoleDialog" />
     </div>
   </div>
 </template>
@@ -78,9 +80,11 @@ import EmployeeEnum from '@/api/constant/employees' // 引入员工的枚举对�
 import AddEmployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
 import QrCode from 'qrcode'
+import AssignRole from './components/assign-role.vue'
 export default {
   components: {
-    AddEmployee
+    AddEmployee,
+    AssignRole
   },
   data() {
     return {
@@ -92,7 +96,9 @@ export default {
       },
       loading: false, // 显示遮罩层,
       showDialog: false,
-      showCodeDialog: false // 显示二维码的弹层
+      showCodeDialog: false, // 显示二维码的弹层
+      showRoleDialog: false,
+      userId: ''
     }
   },
   created() {
@@ -199,6 +205,11 @@ export default {
       } else {
         this.$message.warning('该用户还未上传头像')
       }
+    },
+    async showRole(id) {
+      this.userId = id
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.showRoleDialog = true
     }
   }
 }
