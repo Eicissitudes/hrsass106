@@ -41,7 +41,7 @@
 import { getDepartments } from '@/api/departments'
 import { tranListToTreeDate } from '@/utils/index'
 import EmployeeEnum from '@/api/constant/employees'
-import { addEmployee } from '@/api/emploees'
+import { addEmployee } from '@/api/employees'
 export default {
   props: {
     showDialog: {

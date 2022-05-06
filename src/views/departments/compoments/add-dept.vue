@@ -36,7 +36,7 @@
 
 <script>
 import { getDepartments, addDepartments, getDepartDetail, updateDepartments } from '@/api/departments'
-import { getEmployeeSimple } from '@/api/emploees'
+import { getEmployeeSimple } from '@/api/employees'
 export default {
   props: {
     showDialog: {

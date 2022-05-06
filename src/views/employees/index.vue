@@ -18,6 +18,19 @@
         <el-table v-loading="loading" border :data="list">
           <el-table-column label="序号" sortable="" type="index" />
           <el-table-column label="姓名" sortable="" prop="username" />
+          <el-table-column label="头像" align="center" width="120">
+            <!-- 放置头像 -->
+            <template v-slot="{row}">
+              <img
+                v-imagerror="require('@/assets/common/head.jpg')"
+                :src="row.staffPhoto"
+                alt=""
+                style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+                @click="showQrcode(row.staffPhoto)"
+              >
+            </template>
+          </el-table-column>
+          <el-table-column label="手机号" sortable="" prop="mobile" />
           <el-table-column label="工号" sortable="" prop="workNumber" />
           <el-table-column label="聘用形式" sortable="" :formatter="formatEmployment" prop="formOfEmployment" />
           <el-table-column label="部门" sortable="" prop="departmentName" />
@@ -33,7 +46,7 @@
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template v-slot="{row}">
-              <el-button type="text" size="small">查看</el-button>
+              <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
@@ -48,16 +61,23 @@
         </el-row>
       </el-card>
       <!-- 放置弹层组件 -->
+      <!-- sync 是子组件去修改父组件的一个语法糖 -->
       <add-employee :show-dialog.sync="showDialog" />
+      <el-dialog title="二维码" :visible.sync="showCodeDialog">
+        <el-row type="flex" justify="center">
+          <canvas ref="myCanvas" />
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { getEmployeeList, delEmployee } from '@/api/emploees'
+import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees' // 引入员工的枚举对象
 import AddEmployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
+import QrCode from 'qrcode'
 export default {
   components: {
     AddEmployee
@@ -71,7 +91,8 @@ export default {
         total: 0
       },
       loading: false, // 显示遮罩层,
-      showDialog: false
+      showDialog: false,
+      showCodeDialog: false // 显示二维码的弹层
     }
   },
   created() {
@@ -165,9 +186,20 @@ export default {
       })
       // return rows.map(item => Object.keys(headers).map(key => item[headers[key]]))
       // 需要处理时间格式问题
-    }
+    },
     // 该方法负责将数组转化成二维数组
-
+    showQrcode(url) {
+      // url存在的时候弹出层
+      if (url) {
+        this.showCodeDialog = true
+        QrCode.toCanvas(this.$refs.myCanvas, url)
+        // this.$nextTick(() => {
+        //   QrCode.toCanvas(this.$refs.myCanvas, url) // 将地址转化为二维码
+        // })
+      } else {
+        this.$message.warning('该用户还未上传头像')
+      }
+    }
   }
 }
 </script>
