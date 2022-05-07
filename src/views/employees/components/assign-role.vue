@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="分配角色" :visible="showRoleDialog">
+  <el-dialog title="分配角色" :visible="showRoleDialog" @close="btnCancel">
     <!-- 多选框组 -->
     <el-checkbox-group v-model="roleIds">
       <el-checkbox v-for="item in list" :key="item.id" :label="item.id">
