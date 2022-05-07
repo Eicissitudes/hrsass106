@@ -127,8 +127,8 @@ export default {
       this.showDialog = false
     },
     async editPermission(id) {
-      this.showDialog = true
       this.formData = await getPermissionDetail(id)
+      this.showDialog = true
     }
   }
 }
