@@ -9,22 +9,18 @@
 <style>
 </style>
 <body>
-    
+    <input type="text" class="btn">
 </body>
 <script>
-    var list = [{
-        name:'zs',
-        age:11,
-    },
-    {
-        name:'ls',
-        age:22
-    },{
-        name:'zs',
-        age:'11'
-    }]
-   var newList = {}
-    newList = list.map(item=>item)
-    console.log(newList);
+    var btn = document.querySelector('.btn')
+    btn.addEventListener('input',prevent(console.log('发送'),2000))
+    function prevent(fn,wait) {
+        let timeout = null
+        return args =>{ 
+    if (timeout) clearTimeout(timeout)
+     timeout = setTimeout(fn,wait)
+    }
+}
+
 </script>
 </html>
